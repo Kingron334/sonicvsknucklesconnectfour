@@ -1,0 +1,285 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'scoreboard';
+    src: url('/css/fonts/scoreboard-font.woff2') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #865b78a1;
+    
+}
+.start-screen,
+.background {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.012), rgba(255, 255, 255, 0.17)), url("../images/background-img.jpg"); 
+    background-repeat: no-repeat; 
+    background-size: cover;
+    background-position: center;
+    border: 2px solid black;
+    border-radius: 50px;
+    overflow: hidden;
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+
+}
+
+.start-screen {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.012), rgba(255, 255, 255, 0.17)), url("../images/sonic-vs-knuckles-start-screen.png"); 
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 900px;
+    width: 950px;
+    background-size: cover;
+    position: relative;
+}
+.active {
+    display: block;
+    opacity: 1;
+    pointer-events: all;
+}
+.game-window {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    padding: 20px;
+}
+
+ .game-window img { 
+     width: 100%;
+    
+    
+} 
+
+ .game-board { 
+    display: flex;
+    flex-direction: column;
+    background-repeat: no-repeat; 
+    background-size: cover;
+    background-position: center;
+     width: 100%; 
+     max-width: 1000px;
+     height: auto;
+     
+     border-radius: 10px;
+     overflow: hidden;     
+}
+
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+.score-board {
+    width: 200px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #333;
+    border-radius: 5px;
+    gap: 65px;
+    position: relative;
+    left: -20px;
+    top: -20px;
+}
+
+.score-board img {
+    position: absolute;
+    z-index: 0;
+} 
+
+.score-board h1 {
+    z-index: 1;
+    color: #f0f0f0;
+    font-family: 'scoreboard', sans-serif;
+}
+
+.bottom-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+.bottom-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.column-rings{
+    display: flex;
+    justify-content: space-around;
+    width: 600px;
+    margin-bottom: 10px;
+}
+
+.ring-button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+}
+.ring-button img{
+    width: px; 
+}
+
+.grid {
+    width: 610px;
+    height: 525px;
+    background-color: rgba(255, 228, 196, 0.513);
+    display: grid;
+    grid-template-columns:repeat(7,80px) ;
+    grid-template-rows: repeat(6,80px);
+    gap: 5px;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    z-index: 10;
+}
+
+.square {
+    background-color: rgba(11, 11, 11, 0.372);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: block;
+    opacity: 1;
+    border: 1px solid rgba(0, 0, 0, 0.322);
+    z-index: 2;
+}
+.sonic {
+    background-image: url("../images/sonic_the_hedgehog_disc.png");
+    background-size: cover;
+    background-color: blue;
+
+}
+
+.knuckles {
+    background-image: url("../images/knuckles-disc.png");
+    background-size: cover;
+    background-color: red;
+}
+
+.bottom-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    position: relative;
+}
+ 
+#player-select,
+#next-game,
+#reset,
+#start-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#start-button img {
+    max-width: 500px;
+    
+}
+
+#next-game img{
+    width: 100px;
+   
+}
+#next-game {
+    padding-left: 10px;
+    padding-right: 10px;
+    position: absolute;
+    bottom: 170px;
+    right: -39px;
+}
+#reset {
+    padding-top: 13px;
+    position: absolute;
+    bottom: -255px;
+    right: 70px;
+}
+
+#reset img {
+    width: 120px;
+}
+
+#player-select {
+    position: absolute;
+    width: 100px;
+    bottom: -110px;
+    right: -20px;
+}
+
+#start-button {
+    position: absolute;
+    left: 225px;
+    top: 20px;
+    
+}
+.player-buttons {
+    position: absolute;
+    bottom: 70px;
+    left: 320px;
+    display: flex;
+    gap: 50px;
+}
+.player-buttons button {
+    padding: 10px;
+    font-size: 30px;
+    border-radius: 10px;
+}
+
+.selected {
+    background-color: gold;
+}
+
+button:hover {
+    transform: scale(1.05);
+
+}
+
+button:disabled,
+.disabled {
+    opacity: 0.5;
+}
+video {
+    display: none;
+    opacity: 0;
+    width: 800px;
+    position: absolute;
+    z-index: 15;
+    border-radius: 50px;
+    border: 10px solid gold;
+}
+
+video.active {
+    display: block;
+    opacity: 1;
+
+}

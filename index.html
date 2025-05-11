@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1200, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SonicVsKnucklesConnectFour</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script defer src="./js/app.js"></script>
+
+</head>
+
+<body>
+    <div class="start-screen active">
+        <button id="start-button"><img src="images/start-button.png" alt="Start Game"></button>
+        <div class="player-buttons">
+            <button id="one-player" class="selected">1 Player</button>
+            <button id="two-player">2 Player</button>
+
+        </div>
+    </div>
+    <div class="background">
+        <div class="game-window">
+            <img src="images/title-image.png" alt="Sonic vs Knuckles Connect Four">
+            <div class="game-board">
+                <div class="top-section">
+                    <div class="score-board"><img src="images/score-board.png" alt="">
+                        <h1 id="sonic-score"></h1>
+                        <h1 id="knuckles-score"></h1>
+                    </div>
+                </div>
+                <div class="bottom-section">
+                    <div class="bottom-left">
+                        <div class="column-rings">
+                            <button class="ring-button one"><img src="images/ring-button.png" alt="Column 1"></button>
+                            <button class="ring-button two"><img src="images/ring-button.png" alt="Column 2"></button>
+                            <button class="ring-button three"><img src="images/ring-button.png" alt="Column 3"></button>
+                            <button class="ring-button four"><img src="images/ring-button.png" alt="Column 4"></button>
+                            <button class="ring-button five"><img src="images/ring-button.png" alt="Column 5"></button>
+                            <button class="ring-button six"><img src="images/ring-button.png" alt="Column 6"></button>
+                            <button class="ring-button seven"><img src="images/ring-button.png" alt="Column 7"></button>
+
+                        </div>
+                        <div class="grid"></div>
+                    </div>
+                    <div class="bottom-right">
+                        <button id="next-game" disabled><img src="images/next-game-button .png"
+                                alt="Next Game"></button>
+                        <button id="reset"><img src="images/reset-button-shadow.png" alt="Reset Game"></button>
+                        <button id="player-select"><img src="images/player-select.png" alt="Player Select"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="audio-container" style="display: none;">
+        <audio id="background-music" preload="auto"></audio>
+        <audio id="reset-sound" src="sounds/game-over.mp3" preload="auto"></audio>
+        <audio id="ring-sound" src="sounds/ring-click.mp3" preload="auto"></audio>
+        <audio id="sega-sound" src="sounds/sega.wav" preload="auto"></audio>
+        <audio id="title-music" src="music/title.mp3" loop preload="auto"></audio>
+    </div>
+    <video id="sonic-win-video">
+        <source src="videos/sonic.mp4" type="video/mp4">
+    </video>
+    <video id="knuckles-win-video">
+        <source src="videos/knuckles.mp4" type="video/mp4">
+    </video>
+</body>
+
+</html>
