@@ -271,36 +271,30 @@ function enableButtons(selector) {
 };
 
 /*----------- Event Listeners ----------*/
-// Add click to ring buttons
+// Add click to ring buttons code with AI added
+
 ringButtons.forEach((button, index) => {
     button.addEventListener("click", () => {
         ringSound.play();
         disableButtons(".ring-button");
         const column = index;
-        if (players === 1) {
-            const aiColumn = Math.floor(Math.random() * 7);
-            dropPiece(column);
-            setTimeout(() => {
-                if (!winner) {
-                    dropPiece(aiColumn)
+        dropPiece(column); // Player drops their piece
+        setTimeout(() => {
+            if (!winner && players === 1) {
+                const aiColumn = getAIMove(squares); // Get AI's move
+                if (aiColumn !== -1) {
+                    dropPiece(aiColumn); // AI drops its piece
                     checkForWin();
                 }
-            }, 2000);
-
-        }
-
-        else {
-            dropPiece(column);
-        }
-        setTimeout(() => {
-            checkForWin();
+            } else {
+                checkForWin();
+            }
+            ringTimeOut = setTimeout(() => {
+                enableButtons(".ring-button");
+            }, 1000);
         }, 1000);
-        ringTimeOut = setTimeout(() => {
-            enableButtons(".ring-button");
-        }, 3000);
     });
 });
-
 
 // Start button (resets the game)
 
