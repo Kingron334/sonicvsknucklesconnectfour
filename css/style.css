@@ -298,7 +298,7 @@ video.active {
     z-index: 20;
     border-radius: 10px;
     right: 10px;
-    top: 200px;
+    bottom: 55px;
     background-color: gold;
     width: 100px;
 
