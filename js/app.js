@@ -1,11 +1,13 @@
 /*-------------- Video -------------*/
 const sonicVideo = document.getElementById("sonic-win-video");
 const knucklesVideo = document.getElementById("knuckles-win-video");
+const luckyTieVideo = document.getElementById("lucky-tie-video");
 
 function playVideo(type) {
     if (type === "sonic") {
         sonicVideo.classList.add("active");
         sonicVideo.currentTime = 0;
+        sonicVideo.volume = 0.2;
         sonicVideo.play();
         setTimeout(() => {
             sonicVideo.classList.remove("active");
@@ -14,10 +16,19 @@ function playVideo(type) {
     else if (type === "knuckles") {
         knucklesVideo.classList.add("active");
         knucklesVideo.currentTime = 0;
+        knucklesVideo.volume = 0.2;
         knucklesVideo.play();
         setTimeout(() => {
             knucklesVideo.classList.remove("active");
         }, 4500);
+    } else if (type === "lucky-tie") {
+        luckyTieVideo.classList.add("active");
+        luckyTieVideo.currentTime = 0;
+        luckyTieVideo.volume = 0.2;
+        luckyTieVideo.play();
+        setTimeout(() => {
+            luckyTieVideo.classList.remove("active");
+        }, 10600);
     }
 };
 
@@ -28,6 +39,7 @@ const audio = document.getElementById("background-music");
 const sega = document.getElementById("sega-sound");
 const ringSound = document.getElementById("ring-sound");
 const resetSound = document.getElementById("reset-sound");
+const muteButton = document.getElementById("mute-button");
 const audioPlaylist = [
     "music/title.mp3",
     "music/green-hill.mp3",
@@ -51,7 +63,24 @@ audio.addEventListener('ended', () => {
     currentTrack = (currentTrack + 1) % audioPlaylist.length;
     playTrack();
 })
-audio.volume = 0.1;
+audio.volume = 0.03;
+sega.volume = 0.02;
+ringSound.volume = 0.02;
+resetSound.volume = 0.02;
+
+let isMuted = false; // Track mute state
+
+muteButton.addEventListener("click", () => {
+    isMuted = !isMuted; // Toggle mute state
+    // Apply mute/unmute to all audio elements
+    audio.muted = isMuted;
+    sega.muted = isMuted;
+    ringSound.muted = isMuted;
+    resetSound.muted = isMuted;
+    // Update button text
+    muteButton.textContent = isMuted ? "Unmute" : "Mute";
+});
+
 
 
 /*-------------- Constants -------------*/
@@ -136,6 +165,21 @@ function dropPiece(column) {
 
 // Check for win
 function checkForWin() {
+
+    // Check if the board is full (tie condition)
+    const isBoardFull = squares.every(square =>
+        square.classList.contains("sonic") || square.classList.contains("knuckles")
+    );
+
+    if (isBoardFull && !winner) {
+        // Handle tie scenario
+        winner = true; // Prevent further moves
+        playVideo("lucky-tie");
+        disableButtons(".ring-button");
+        enableButtons("#next-game");
+
+    }
+
     //check horizontallly
     for (let row = 0; row < board_height; row++) {
         for (let col = 0; col < board_width - 3; col++) {
@@ -144,6 +188,7 @@ function checkForWin() {
                 squares[squareIndex + 1].classList.contains("sonic") &&
                 squares[squareIndex + 2].classList.contains("sonic") &&
                 squares[squareIndex + 3].classList.contains("sonic")) {
+
                 sonicWins++;
                 updateScoreboard();
                 winner = true;
@@ -154,6 +199,7 @@ function checkForWin() {
                 squares[squareIndex + 1].classList.contains("knuckles") &&
                 squares[squareIndex + 2].classList.contains("knuckles") &&
                 squares[squareIndex + 3].classList.contains("knuckles")) {
+
                 knucklesWins++;
                 updateScoreboard();
                 winner = true;
@@ -171,6 +217,7 @@ function checkForWin() {
                 squares[squareIndex + board_width].classList.contains("sonic") &&
                 squares[squareIndex + 2 * board_width].classList.contains("sonic") &&
                 squares[squareIndex + 3 * board_width].classList.contains("sonic")) {
+
                 sonicWins++;
                 updateScoreboard();
                 winner = true;
@@ -180,6 +227,7 @@ function checkForWin() {
                 squares[squareIndex + board_width].classList.contains("knuckles") &&
                 squares[squareIndex + 2 * board_width].classList.contains("knuckles") &&
                 squares[squareIndex + 3 * board_width].classList.contains("knuckles")) {
+
                 knucklesWins++;
                 updateScoreboard();
                 winner = true;
@@ -196,6 +244,7 @@ function checkForWin() {
                 squares[squareIndex + (board_width + 1)].classList.contains("sonic") &&
                 squares[squareIndex + 2 * (board_width + 1)].classList.contains("sonic") &&
                 squares[squareIndex + 3 * (board_width + 1)].classList.contains("sonic")) {
+
                 sonicWins++;
                 updateScoreboard();
                 winner = true;
@@ -205,6 +254,7 @@ function checkForWin() {
                 squares[squareIndex + (board_width + 1)].classList.contains("knuckles") &&
                 squares[squareIndex + 2 * (board_width + 1)].classList.contains("knuckles") &&
                 squares[squareIndex + 3 * (board_width + 1)].classList.contains("knuckles")) {
+
                 knucklesWins++;
                 updateScoreboard();
                 winner = true;
@@ -221,6 +271,7 @@ function checkForWin() {
                 squares[squareIndex + (board_width - 1)].classList.contains("sonic") &&
                 squares[squareIndex + 2 * (board_width - 1)].classList.contains("sonic") &&
                 squares[squareIndex + 3 * (board_width - 1)].classList.contains("sonic")) {
+
                 sonicWins++;
                 updateScoreboard();
                 winner = true;
@@ -239,7 +290,7 @@ function checkForWin() {
         }
     }
     if (winner) {
-        clearTimeout(ringTimeOut);
+        // clearTimeout(ringTimeOut);
         disableButtons(".ring-button");
         enableButtons("#next-game");
     }
@@ -279,6 +330,7 @@ ringButtons.forEach((button, index) => {
         disableButtons(".ring-button");
         const column = index;
         dropPiece(column); // Player drops their piece
+        checkForWin();
         setTimeout(() => {
             if (!winner && players === 1) {
                 const aiColumn = getAIMove(squares); // Get AI's move
@@ -286,12 +338,10 @@ ringButtons.forEach((button, index) => {
                     dropPiece(aiColumn); // AI drops its piece
                     checkForWin();
                 }
-            } else {
-                checkForWin();
             }
-            ringTimeOut = setTimeout(() => {
+        if (!winner) {
                 enableButtons(".ring-button");
-            }, 1000);
+            }
         }, 1000);
     });
 });
